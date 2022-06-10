@@ -58,6 +58,20 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
+const BackButton = styled.a`
+  font-size: 40px;
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  top: 20px;
+  left: 50px;
+  background-color: blueviolet;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 3px #999;
+`;
+
 const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
@@ -164,6 +178,9 @@ function Coin() {
         <Loader>Loading...</Loader>
       ) : (
         <>
+          <Link to={`${process.env.PUBLIC_URL}/`}>
+            <BackButton>👈</BackButton>
+          </Link>
           <Overview>
             <OverviewItem>
               <span>Rank:</span>
@@ -192,13 +209,15 @@ function Coin() {
 
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/${coinId}/chart`} key={infoData?.symbol}>
+                Chart
+              </Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-          <Outlet context={coinId} />
+          <Outlet context={tickersData?.symbol} />
         </>
       )}
     </Container>

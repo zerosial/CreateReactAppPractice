@@ -68,10 +68,10 @@ function Coins() {
   return (
     <Container>
       <Helmet>
-        <title>Coins</title>
+        <title>Coin Tracker</title>
       </Helmet>
       <Header>
-        <Title>Coins</Title>
+        <Title>암호 화페</Title>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
