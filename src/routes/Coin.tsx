@@ -1,17 +1,9 @@
-import { useQuery } from "react-query";
 import { Helmet } from "react-helmet";
-import {
-  Switch,
-  Route,
-  useLocation,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { useQuery } from "react-query";
+import { useLocation, useParams, useMatch, Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
-import Chart from "./Chart";
-import Price from "./Price";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -47,7 +39,7 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 33%;
+
   span:first-child {
     font-size: 10px;
     font-weight: 400;
@@ -72,18 +64,15 @@ const Tab = styled.span<{ isActive: boolean }>`
   font-size: 12px;
   font-weight: 400;
   background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
-    padding: 7px 0px;
     display: block;
   }
 `;
 
-interface RouteParams {
-  coinId: string;
-}
 interface RouteState {
   name: string;
 }
@@ -142,21 +131,22 @@ interface PriceData {
 }
 
 function Coin() {
-  const { coinId } = useParams<RouteParams>();
-  const { state } = useLocation<RouteState>();
-  const priceMatch = useRouteMatch("/:coinId/price");
-  const chartMatch = useRouteMatch("/:coinId/chart");
+  const { coinId } = useParams();
+  const location = useLocation();
+  const state = location.state as RouteState;
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
-    () => fetchCoinInfo(coinId)
+    () => fetchCoinInfo(coinId!)
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId),
+    () => fetchCoinTickers(coinId!),
     {
       refetchInterval: 5000,
     }
   );
+  const priceMatch = useMatch("/:coinId/price");
+  const chartMatch = useMatch("/:coinId/chart");
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
@@ -208,15 +198,7 @@ function Coin() {
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-
-          <Switch>
-            <Route path={`/:coinId/price`}>
-              <Price />
-            </Route>
-            <Route path={`/:coinId/chart`}>
-              <Chart coinId={coinId} />
-            </Route>
-          </Switch>
+          <Outlet context={coinId} />
         </>
       )}
     </Container>

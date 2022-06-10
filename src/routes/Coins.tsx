@@ -1,8 +1,8 @@
-import { Helmet } from "react-helmet";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  height: 15vh;
+  height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,8 +25,8 @@ const Coin = styled.li`
   border-radius: 15px;
   margin-bottom: 10px;
   a {
-    display: flex;
     align-items: center;
+    display: flex;
     padding: 20px;
     transition: color 0.2s ease-in;
   }
@@ -68,25 +68,23 @@ function Coins() {
   return (
     <Container>
       <Helmet>
-        <title>코인</title>
+        <title>Coins</title>
       </Helmet>
       <Header>
-        <Title>코인</Title>
+        <Title>Coins</Title>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {data?.slice(0, 100).map((coin) => (
+          {data?.slice(0, 10).map((coin) => (
             <Coin key={coin.id}>
-              <Link
-                to={{
-                  pathname: `/${coin.id}`,
-                  state: { name: coin.name },
-                }}
-              >
+              <Link to={`/${coin.id}`} state={{ name: coin.name }}>
                 <Img
-                  src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  src={`https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/16/${coin.name
+                    .toLowerCase()
+                    .split(" ")
+                    .join("-")}.png`}
                 />
                 {coin.name} &rarr;
               </Link>
