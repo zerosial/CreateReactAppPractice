@@ -20,7 +20,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
+  background-color: ${(props) => props.theme.boxColor};
   color: ${(props) => props.theme.bgColor};
   border-radius: 15px;
   margin-bottom: 10px;
@@ -77,7 +77,7 @@ function Coins() {
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {data?.slice(0, 10).map((coin) => (
+          {data?.slice(0, 20).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={{ name: coin.name }}>
                 <Img

@@ -1,6 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Router from "./Router";
-import Darkbutton from "./darkmode";
+import { ThemeProvider } from "styled-components";
+import { darktheme, lighttheme } from "./theme";
+import { useState } from "react";
+import DarkModeToggle from "react-dark-mode-toggle";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -55,7 +58,7 @@ table {
   box-sizing: border-box;
 }
 body {
-  font-weight: 300;
+  font-weight: 550;
   font-family: 'Source Sans Pro', sans-serif;
   background-color:${(props) => props.theme.bgColor};
   color:${(props) => props.theme.textColor};
@@ -67,12 +70,29 @@ a {
 }
 `;
 
+const DarkButtonCss = styled.a`
+  position: fixed;
+  top: 35px;
+  right: 50px;
+`;
+
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(() => false);
+  console.log(isDarkMode);
+
   return (
     <>
-      <GlobalStyle />
-      <Darkbutton />
-      <Router />
+      <ThemeProvider theme={isDarkMode === true ? darktheme : lighttheme}>
+        <GlobalStyle />
+        <DarkButtonCss>
+          <DarkModeToggle
+            onChange={setIsDarkMode}
+            checked={isDarkMode}
+            size={80}
+          />
+        </DarkButtonCss>
+        <Router />
+      </ThemeProvider>
     </>
   );
 }
