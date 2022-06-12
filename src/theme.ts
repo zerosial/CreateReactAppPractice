@@ -5,6 +5,7 @@ export const lighttheme: DefaultTheme = {
   boxColor: "#969696",
   textColor: "#00BA32",
   accentColor: "#E92C2C",
+  transition: 1,
 };
 
 export const darktheme: DefaultTheme = {
@@ -12,4 +13,5 @@ export const darktheme: DefaultTheme = {
   boxColor: "#585757",
   textColor: "#17C849",
   accentColor: "#F74141",
+  transition: 1,
 };

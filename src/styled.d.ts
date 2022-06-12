@@ -6,5 +6,6 @@ declare module "styled-components" {
     boxColor: string;
     bgColor: string;
     accentColor: string;
+    transition: number;
   }
 }
