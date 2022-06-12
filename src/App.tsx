@@ -72,7 +72,7 @@ a {
 
 const DarkButtonCss = styled.a`
   position: fixed;
-  top: 35px;
+  top: 25px;
   right: 50px;
 `;
 

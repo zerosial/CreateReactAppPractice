@@ -17,11 +17,6 @@ interface IHistorical {
   unit: number;
 }
 
-interface Idata {
-  x: Date;
-  y: number[];
-}
-
 function Chart() {
   const coinId = useOutletContext<string>();
   const { isLoading, data } = useQuery<IHistorical[]>(

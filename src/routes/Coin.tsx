@@ -23,6 +23,8 @@ const Container = styled.div`
 
 const Header = styled.header`
   height: 15vh;
+  position: relative;
+  right: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,17 +61,16 @@ const Tabs = styled.div`
 `;
 
 const BackButton = styled.a`
-  font-size: 40px;
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  top: 20px;
-  left: 50px;
-  background-color: blueviolet;
-  color: #fff;
-  border-radius: 50px;
+  font-size: 34px;
+  width: 100px;
+  height: 50px;
+  position: relative;
+  right: 25px;
+  color: ${(props) => props.theme.accentColor};
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
   text-align: center;
-  box-shadow: 2px 2px 3px #999;
+  box-shadow: 5px 5px 7px #999;
 `;
 
 const Tab = styled.span<{ isActive: boolean }>`
@@ -170,6 +171,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <BackButton>
+          <Link to={`${process.env.PUBLIC_URL}/`}>👈</Link>
+        </BackButton>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
@@ -178,9 +182,6 @@ function Coin() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Link to={`${process.env.PUBLIC_URL}/`}>
-            <BackButton>👈</BackButton>
-          </Link>
           <Overview>
             <OverviewItem>
               <span>Rank:</span>
